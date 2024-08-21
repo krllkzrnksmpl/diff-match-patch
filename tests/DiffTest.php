@@ -921,4 +921,28 @@ class DiffTest extends TestCase
         }
     }
 
+    public function testMultiByteEmojis()
+    {
+        $a = '😀';
+        $b = '😁';
+
+        $expectedChanges = array(
+            array(-1, '😀'),
+            array(1, '😁'),
+        );
+
+        $changes = $this->d->main($a, $b)->getChanges();
+        $this->assertEquals($expectedChanges, $changes);
+
+        $a = '📌';
+        $b = '😀';
+
+        $expectedChanges = array(
+            array(-1, '📌'),
+            array(1, '😀'),
+        );
+
+        $changes = $this->d->main($a, $b)->getChanges();
+        $this->assertEquals($expectedChanges, $changes);
+    }
 }
